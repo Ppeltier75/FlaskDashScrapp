@@ -1,0 +1,67 @@
+<!-- templates/company.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <!-- ... -->
+</head>
+<body>
+    
+    {% if image_path %}
+        <style>
+            .success-background {
+                /* Votre CSS pour success-background ici... */
+                color: white; /* Texte en blanc */
+                background: url("{{ url_for('static', filename='bonheur.png') }}") no-repeat center center;
+                background-size: cover;
+                height: 100vh; /* Pleine hauteur de la fenêtre */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+            }
+        </style>
+        <div class="success-background">
+            <p>La base de données a été scrapée avec succès et les graphiques peuvent être générés.</p>
+        </div>
+        
+    {% else %}
+    <style>
+        .error-background {
+            /* Votre CSS existant pour error-background ici... */
+            color: white; 
+        }
+        
+        .error-background p {
+            font-size: 1.5em; 
+        }
+        </style>
+        
+        <div class="error-background">
+            <p>Le nom de l'entreprise est inexistant ou la génération de l'image a échoué.
+            Il est possible que vous ayez mal écrit le nom de la compagnie, veuillez réessayer.</p>
+        </div>
+    
+        <style>
+            
+            .error-background {
+                background: url("{{ url_for('static', filename='triste.png') }}") no-repeat center center;
+                background-size: cover;
+                height: 100vh; 
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+            }
+            
+            </style>
+            
+    {% endif %}
+</body>
+</html>
+{% endblock %}
+
+
+

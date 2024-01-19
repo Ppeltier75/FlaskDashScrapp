@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Welcome to the Scrapping TrustPilot Company Tool</h1>
+    <p>Select a companie to scrapp their TrustPilot reviews.</p>
+
+    <!-- Ajout d'une barre de recherche pour l'entreprise -->
+    <div class="search-bar">
+        <h2>Search for a Company's Reviews:</h2>
+        <form action="/search" method="post" id="search-form">
+            <input type="text" id="companyName" name="company" placeholder="Enter company name">
+            <button type="submit" id="search-button">Search</button>
+        </form>
+    </div>
+    
+    <script>
+        document.getElementById('search-form').onsubmit = function() {
+            document.getElementById('search-button').innerHTML = 'Veuillez patienter...';
+            document.getElementById('search-button').disabled = true;
+        };
+    </script>
+    
+</div>
+
+<div>
+    <h3>Entreprises que vous avez scrapées :</h3>
+    <ul>
+        {% for company in scraped_companies %}
+            <li>
+                <a href="{{ url_for('download_csv', company_name=company.company_name) }}">
+                    {{ company.company_name }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+
+
+ 
+    {% if current_user.is_authenticated %}
+    <a href="{{ url_for('/dash/') }}" class="btn btn-primary">Launch Dash App</a>
+    {% else %}
+    <p>Veuillez vous connecter pour lancer l'application Dash.</p>
+    {% endif %}
+
+
+
+<form action="{{ url_for('delete_company') }}" method="post">
+    <label for="company">Nom de l'entreprise à supprimer:</label>
+    <input type="text" id="company" name="company">
+    <input type="submit" value="Supprimer">
+</form>
+
+{% endblock %}
+
+
+
